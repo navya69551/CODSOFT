@@ -1,0 +1,195 @@
+TASK - 1
+
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+
+        int score = 0;
+        String playAgain = "y";
+
+        System.out.println(" Welcome to the Number Guessing Game!");
+
+        while (playAgain.equalsIgnoreCase("y")) {
+            int number = rand.nextInt(100) + 1; 
+            int attemptsAllowed = 7;
+            int attemptsUsed = 0;
+
+            System.out.println("\nI'm thinking of a number between 1 and 100.");
+            System.out.println("You have " + attemptsAllowed + " attempts to guess it.");
+
+            boolean guessedCorrectly = false;
+
+            while (attemptsUsed < attemptsAllowed) {
+                System.out.print("\nEnter your guess: ");
+                int guess = sc.nextInt();
+                attemptsUsed++;
+
+                if (guess == number) {
+                    System.out.println(" Correct! You guessed the number in " + attemptsUsed + " attempts.");
+                    score++;
+                    guessedCorrectly = true;
+                    break;
+                } else if (guess < number) {
+                    System.out.println(" Too low! Try again.");
+                } else {
+                    System.out.println(" Too high! Try again.");
+                }
+
+                System.out.println("Attempts remaining: " + (attemptsAllowed - attemptsUsed));
+            }
+
+            if (!guessedCorrectly) {
+                System.out.println("\n You're out of attempts! The correct number was: " + number);
+            }
+
+            System.out.println("Your current score (rounds won): " + score);
+            System.out.print("\nDo you want to play another round? (y/n): ");
+            playAgain = sc.next();
+        }
+
+        System.out.println("\n Game Over!");
+        System.out.println("Final Score (rounds won): " + score);
+        System.out.println("Thanks for playing! ");
+
+        sc.close();
+    }
+}
+
+
+
+
+
+
+TASK - 2
+
+import java.util.Scanner;
+
+public class GradeCalculator {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number of subjects: ");
+        int subjects = sc.nextInt();
+
+        int totalMarks = 0;
+        for (int i = 1; i <= subjects; i++) {
+            System.out.print("Enter marks for Subject " + i + " (out of 100): ");
+            int marks = sc.nextInt();
+            totalMarks += marks;
+        }
+        double averagePercentage = (double) totalMarks / subjects;
+        String grade;
+        if (averagePercentage >= 90) {
+            grade = "A+";
+        } else if (averagePercentage >= 80) {
+            grade = "A";
+        } else if (averagePercentage >= 70) {
+            grade = "B";
+        } else if (averagePercentage >= 60) {
+            grade = "C";
+        } else if (averagePercentage >= 50) {
+            grade = "D";
+        } else {
+            grade = "F";
+        }
+        System.out.println("\n Result Summary");
+        System.out.println("Total Marks: " + totalMarks + " / " + (subjects * 100));
+        System.out.println("Average Percentage: " + String.format("%.2f", averagePercentage) + "%");
+        System.out.println("Grade: " + grade);
+
+        sc.close();
+    }
+}
+
+
+TASK - 3
+
+import java.util.Scanner;
+class BankAccount {
+    private double balance;
+    public BankAccount(double initialBalance) {
+        if (initialBalance < 0) {
+            balance = 0;
+        } else {
+            balance = initialBalance;
+        }
+    }
+    public double checkBalance() {
+        return balance;
+    }
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.println(" Successfully deposited: $" + amount);
+        } else {
+            System.out.println(" Invalid deposit amount.");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > balance) {
+            System.out.println(" Insufficient balance! Withdrawal failed.");
+        } else if (amount <= 0) {
+            System.out.println(" Invalid withdrawal amount.");
+        } else {
+            balance -= amount;
+            System.out.println(" Successfully withdrawn: $" + amount);
+        }
+    }
+}
+
+
+public class ATM {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+      
+        BankAccount account = new BankAccount(1000.0);
+
+        System.out.println(" Welcome to the ATM Machine!");
+
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\nPlease choose an option:");
+            System.out.println("1. Check Balance");
+            System.out.println("2. Deposit Money");
+            System.out.println("3. Withdraw Money");
+            System.out.println("4. Exit");
+
+            System.out.print("Enter your choice: ");
+            int choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println(" Your current balance is: $" + account.checkBalance());
+                    break;
+                case 2:
+                    System.out.print("Enter amount to deposit: $");
+                    double depositAmount = sc.nextDouble();
+                    account.deposit(depositAmount);
+                    break;
+                case 3:
+                    System.out.print("Enter amount to withdraw: $");
+                    double withdrawAmount = sc.nextDouble();
+                    account.withdraw(withdrawAmount);
+                    break;
+                case 4:
+                    System.out.println(" Thank you for using the ATM. Goodbye!");
+                    exit = true;
+                    break;
+                default:
+                    System.out.println(" Invalid choice. Please try again.");
+            }
+        }
+
+        sc.close();
+    }
+}
+
+ 
